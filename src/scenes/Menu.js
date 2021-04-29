@@ -6,7 +6,7 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('farm', './assets/menuBackground.png');
+        this.load.image('farm', './assets/mainMenu.png');
         this.load.image('horse', './assets/horse.png');
     }
 
@@ -29,7 +29,7 @@ class Menu extends Phaser.Scene {
         this.farm = this.add.tileSprite(0, 0, 640, 480, 'farm').setOrigin(0, 0);
 
         // display horse
-        this.horse = this.add.tileSprite(50, 300, 128, 80, 'horse').setOrigin(0, 0);
+        //this.horse = this.add.tileSprite(50, 300, 128, 80, 'horse').setOrigin(0, 0);
 
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ENDLESS RIDER', menuConfig).setOrigin(0.5);
