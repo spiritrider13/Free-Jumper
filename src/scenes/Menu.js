@@ -6,7 +6,7 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('farm', './assets/mainMenu.png');
+        this.load.image('farm', './assets/menu.png');
         this.load.image('horse', './assets/horse.png');
     }
 
