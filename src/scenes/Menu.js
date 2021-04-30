@@ -18,10 +18,10 @@ class Menu extends Phaser.Scene {
             backgroundColor: '#f3f8e2', // orange
             color: '#843605',   // orange text color
             align: 'right',
-            padding: {
+            /*padding: {
                 top: 5,
                 bottom: 5,
-            },
+            },*/
             fixedWidth: 0
         }   
 
