@@ -1,6 +1,8 @@
 // Obstacle prefab
 class Obstacle extends Phaser.GameObjects.Sprite {
-    constructor(scene, type, frame) {
+    constructor(scene, type, texture, frame) {
+
+        super(scene, 999, 999, texture, frame);
 
         this.active = false; //whether the obstacle is activeon the screen
 
@@ -16,9 +18,7 @@ class Obstacle extends Phaser.GameObjects.Sprite {
         else{
             console.error("Invalid obstacle type attempted instatiation");
         }
-
-
-        super(scene, 999, 999, this.texture, frame);
+        
         scene.add.existing(this);   // add to exisiting scene
     }
 

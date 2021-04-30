@@ -7,6 +7,7 @@ class Play extends Phaser.Scene {
 
     preload() {
         this.load.image('background', './assets/playBackground.png');
+        this.load.image('defaultTexture', './assets/defaultTexture.jpg');
         this.load.image('horse', './assets/horse.png');
     }
 
@@ -21,9 +22,9 @@ class Play extends Phaser.Scene {
         this.p1Horse = new Horse(this, 50, 300, 'horse', 128, 80).setOrigin(0, 0);
 
         // instantiate obstacles
-        this.obstacle1 = new Obstacle(this, 1).setOrigin(0);
-        this.obstacle2 = new Obstacle(this, 2).setOrigin(0);
-        this.obstacle3 = new Obstacle(this, 3).setOrigin(0);
+        this.obstacle1 = new Obstacle(this, 0, 'defaultTexture').setOrigin(0);
+        this.obstacle2 = new Obstacle(this, 1, 'defaultTexture').setOrigin(0);
+        this.obstacle3 = new Obstacle(this, 2, 'defaultTexture').setOrigin(0);
         
         // white borders
         this.add.rectangle(0, 0, game.config.width, borderUISize/*height*/, '0xFFFFFF').setOrigin(0, 0);    // top
@@ -55,7 +56,7 @@ class Play extends Phaser.Scene {
         this.distance = 0;
 
         //speed modifier for distance value interperetation
-        let speedModifier = 1.0;
+        this.speedModifier = 1.0;
 
         //game over flag
         this.gameOver = false;
