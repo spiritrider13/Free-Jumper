@@ -6,13 +6,13 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', './assets/playBackground.png');
+        this.load.image('playbackground', './assets/playBackground.png');
         this.load.image('horse', './assets/horse.png');
     }
 
     create() {
         // background
-        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, 640, 480, 'playbackground').setOrigin(0, 0);
 
         // UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0xf3f8e2).setOrigin(0,0);
