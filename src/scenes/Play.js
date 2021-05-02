@@ -22,9 +22,13 @@ class Play extends Phaser.Scene {
         this.p1Horse = new Horse(this, 50, 300, 'horse', 128, 80).setOrigin(0, 0);
 
         // instantiate obstacles
-        this.obstacle1 = new Obstacle(this, 0, 'defaultTexture').setOrigin(0);
-        this.obstacle2 = new Obstacle(this, 1, 'defaultTexture').setOrigin(0);
-        this.obstacle3 = new Obstacle(this, 2, 'defaultTexture').setOrigin(0);
+        //parameters go by (texture type, scene, x, y, default texture, frame)
+        this.obstacle1 = new Obstacle(0, this, 999, 999, 'defaultTexture').setOrigin(0);
+        this.obstacle2 = new Obstacle(1, this, 999, 999, 'defaultTexture').setOrigin(0);
+        this.obstacle3 = new Obstacle(2, this, 999, 999, 'defaultTexture').setOrigin(0);
+
+        //current obstacle on screen
+        this.currentObstacle = null;
         
         // white borders
         this.add.rectangle(0, 0, game.config.width, borderUISize/*height*/, '0xFFFFFF').setOrigin(0, 0);    // top
@@ -61,9 +65,6 @@ class Play extends Phaser.Scene {
         //actual distance variable used to access distance
         this.distance = 0;
 
-        //speed modifier for distance value interperetation
-        this.speedModifier = 1.0;
-
         //game over flag
         this.gameOver = false;
 
@@ -80,43 +81,85 @@ class Play extends Phaser.Scene {
             if(!this.gameStart){
                 this.gameStart = true;
                 this.tempText.text = "";
+                this.beginRandom();
             }
             else{
                 console.log("Horse Jump Triggered");
-                console.log(this.speedModifier);
+                console.log(speedModifier);
                 this.horseJump();
             }
         }
 
+        //update all objects
+        this.p1Horse.update();
+        if(this.currentObstacle != null){
+            this.currentObstacle.update();
+            if(this.currentObstacle.x <= 0 - this.currentObstacle.width){
+                this.currentObstacle.end();
+                this.beginRandom();
+            }
+        }
         
-
         //updating the distance
         if(!this.gameOver && this.gameStart){ //if game hasnt ended and has been started
-            this.distance += delta * this.speedModifier;
-            this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/250);
+            this.distance += delta * speedModifier;
+            this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100);
         }
 
         //speed incrementation
-        var temp = this.distance / 250;
-        if(temp > 50 && this.speedModifier == 1)
-            this.speedModifier += 0.25;
-        else if(temp > 100 && this.speedModifier == 1.25)
-            this.speedModifier += 0.5;
-        else if(temp > 200 && this.speedModifier == 1.75)
-            this.speedModifier += 0.5;
-        else if(temp > 300 && this.speedModifier == 2.25)
-            this.speedModifier += 0.5;
-        else if(temp > 400 && this.speedModifier == 2.75)
-            this.speedModifier += 0.5;
-        else if(temp > 500 && this.speedModifier == 3.25)
-            this.speedModifier += 0.5;
-        else if(temp > 600 && this.speedModifier == 3.75)
-            this.speedModifier += 0.5;
-
+        //Every 100 meters, the horse's speedModifier increases by 0.2
+        //the "toFixed(1)" method rounds to nearest tenth.
+        //this is to fix floating point abiguity
+        var temp = this.distance / 100;
+        if(temp > 100 && speedModifier == 1)
+            speedModifier += 0.2;
+        else if(temp > 200 && speedModifier.toFixed(1) == 1.2)
+            speedModifier += 0.2;
+        else if(temp > 300 && speedModifier.toFixed(1) == 1.4)
+            speedModifier += 0.2;
+        else if(temp > 400 && speedModifier.toFixed(1) == 1.6)
+            speedModifier += 0.2;
+        else if(temp > 500 && speedModifier.toFixed(1) == 1.8)
+            speedModifier += 0.2;
+        else if(temp > 600 && speedModifier.toFixed(1) == 2)
+            speedModifier += 0.2;
+        else if(temp > 700 && speedModifier.toFixed(1) == 2.2)
+            speedModifier += 0.2;
+        else if(temp > 800 && speedModifier.toFixed(1) == 2.4)
+            speedModifier += 0.2;
+        else if(temp > 900 && speedModifier.toFixed(1) == 2.6)
+            speedModifier += 0.2;
+        else if(temp > 1000 && speedModifier.toFixed(1) == 2.8)
+            speedModifier += 0.2;
     }
 
     horseJump(){
         this.p1Horse.jump();
+    }
+
+    //used for when the obstacle reaches left hand side - set inactive
+    beginRandom() {
+
+        var random = Math.floor(Math.random() * 3); //creates either 0, 1, or 3
+
+        //the following switch block takes the previously generated random number and
+        //activates the corresponding obstacle through the Play class
+        switch(random){
+            case 0:
+                this.currentObstacle = this.obstacle1;
+                this.obstacle1.begin();
+                break;
+            case 1:
+                this.currentObstacle = this.obstacle2;
+                this.obstacle2.begin();
+                break;
+            case 2:
+                this.currentObstacle = this.obstacle3;
+                this.obstacle3.begin();
+                break;
+            default:
+                console.error("Invalid random obstacle attempted activation.");
+        }
     }
     
 }

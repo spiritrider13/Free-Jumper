@@ -7,13 +7,7 @@ class Horse extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        // move horse right
-        this.x += this.moveSpeed;
-
-        // wrap around from left edge to right edge
-        if(this.x <= 0 - this.width) {
-            this.x = game.config.width;
-        }
+        
     }
 
     // position reset
@@ -22,6 +16,6 @@ class Horse extends Phaser.GameObjects.Sprite {
     }
 
     jump(){
-        
+
     }
 }

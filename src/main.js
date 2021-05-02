@@ -23,5 +23,8 @@ let game = new Phaser.Game(config);
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
+//a modifying double that speeds up obstacles and the distance over time
+let speedModifier = 1;
+
 // reserve keyboard variables
 let keySPACE, keyLEFT, keyRIGHT;
