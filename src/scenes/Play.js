@@ -49,8 +49,14 @@ class Play extends Phaser.Scene {
             fixedWidth: 0
         }
 
+        //define space key
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
         //add elapsed time and distance to scene
         this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0', hudConfig);
+
+        //temp spacebar text
+        this.tempText = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'PRESS SPACEBAR TO START', hudConfig).setOrigin(0.5);
 
         //actual distance variable used to access distance
         this.distance = 0;
@@ -60,18 +66,57 @@ class Play extends Phaser.Scene {
 
         //game over flag
         this.gameOver = false;
+
+        //game start flag
+        this.gameStart = false;
         
     }
 
     update(time, delta) {
+        //if space key is pressed...
+        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+
+            //if the game hasn't started, start the game
+            if(!this.gameStart){
+                this.gameStart = true;
+                this.tempText.text = "";
+            }
+            else{
+                console.log("Horse Jump Triggered");
+                console.log(this.speedModifier);
+                this.horseJump();
+            }
+        }
+
         
 
         //updating the distance
-        if(!this.gameOver){
-            this.distance = Math.floor((time / 500) * this.speedModifier)
-            this.distanceDisplay.text = 'Distance Traveled: ' + this.distance;
+        if(!this.gameOver && this.gameStart){ //if game hasnt ended and has been started
+            this.distance += delta * this.speedModifier;
+            this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/250);
         }
 
+        //speed incrementation
+        var temp = this.distance / 250;
+        if(temp > 50 && this.speedModifier == 1)
+            this.speedModifier += 0.25;
+        else if(temp > 100 && this.speedModifier == 1.25)
+            this.speedModifier += 0.5;
+        else if(temp > 200 && this.speedModifier == 1.75)
+            this.speedModifier += 0.5;
+        else if(temp > 300 && this.speedModifier == 2.25)
+            this.speedModifier += 0.5;
+        else if(temp > 400 && this.speedModifier == 2.75)
+            this.speedModifier += 0.5;
+        else if(temp > 500 && this.speedModifier == 3.25)
+            this.speedModifier += 0.5;
+        else if(temp > 600 && this.speedModifier == 3.75)
+            this.speedModifier += 0.5;
+
+    }
+
+    horseJump(){
+        this.p1Horse.jump();
     }
     
 }
