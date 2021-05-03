@@ -6,14 +6,15 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        // images/sprites
         this.load.image('background', './assets/playBackground.png');
-        this.load.image('defaultTexture', './assets/defaultTexture.jpg');
+        this.load.image('obstacle0', './assets/obstacle-1.png');
+        this.load.image('obstacle1', './assets/obstacle2.png');
+        this.load.image('obstacle2', './assets/obstacle3.png');
         this.load.image('horse', './assets/horse.png');
 
-        // load spritesheets/animations
+        // load spritesheet
         this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
-        this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 112, frameHeight: 78, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 112, frameHeight: 78, startFrame: 0, endFrame: 2});
     }
 
     create() {
@@ -24,13 +25,13 @@ class Play extends Phaser.Scene {
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0xf3f8e2).setOrigin(0,0);
 
         // add player horse
-        //this.p1Horse = new Horse(this, 50, 300, 'horse', 128, 80).setOrigin(0, 0);
+        this.p1Horse = new Horse(this, 50, 300, 'horse', 128, 80).setOrigin(0, 0);
 
         // instantiate obstacles
         //parameters go by (texture type, scene, x, y, default texture, frame)
-        this.obstacle1 = new Obstacle(0, this, 999, 999, 'defaultTexture').setOrigin(0);
-        this.obstacle2 = new Obstacle(1, this, 999, 999, 'defaultTexture').setOrigin(0);
-        this.obstacle3 = new Obstacle(2, this, 999, 999, 'defaultTexture').setOrigin(0);
+        this.obstacle1 = new Obstacle(0, this, 640, 480, 'obstacle0').setOrigin(0);
+        this.obstacle2 = new Obstacle(1, this, 640, 480, 'obstacle1').setOrigin(0);
+        this.obstacle3 = new Obstacle(2, this, 640, 480, 'obstacle2').setOrigin(0);
 
         //current obstacle on screen
         this.currentObstacle = null;
@@ -79,8 +80,8 @@ class Play extends Phaser.Scene {
         // run animation config
         this.anims.create({
             key: 'run',
-            frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 3, first: 0}),
-            framerate: .5,
+            frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 2, first: 0}),
+            framerate: 1,
             repeat: -1
         });
 
@@ -91,12 +92,10 @@ class Play extends Phaser.Scene {
             framerate: 5
         });
         
-        this.p1Horse = new Horse(this, 50, 322, 'horseRun', 128, 80).setOrigin(0, 0);
-
     }
 
     update(time, delta) {
-        //this.p1Horse.alpha = 0;
+        this.p1Horse.alpha = 0;
 
         //if space key is pressed...
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
@@ -116,18 +115,19 @@ class Play extends Phaser.Scene {
         }
 
         // Running animation
-        if(this.gameStart){
-            this.p1Horse.alpha = 0;            // remove horse sprite
+        if(!this.gameOver){
+            this.p1Horse.alpha = 0;
             let run = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0, 0); 
             run.anims.play('run');             // play jump animation
             run.on('animationcomplete', () => {    // callback after anim completes
                 //horse.reset();                       // reset horse position
                 //horse.alpha = 1;                     // make horse visible again
-                run.destroy();                     // remove run sprite
+                run.destroy();                     // remove jump sprite
             });
         }
 
         //update all objects
+        this.p1Horse.update();
         if(this.currentObstacle != null){
             this.currentObstacle.update();
             if(this.currentObstacle.x <= 0 - this.currentObstacle.width){
@@ -219,7 +219,7 @@ class Play extends Phaser.Scene {
                 console.error("Invalid random obstacle attempted activation.");
         }
     }
-    
+
     checkCollision(obstacle, horse) {  // collision function from rocket patrol
         // simple AABB checking
         if (obstacle.x < horse.x + horse.width &&
