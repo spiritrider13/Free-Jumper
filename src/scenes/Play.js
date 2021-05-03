@@ -115,10 +115,16 @@ class Play extends Phaser.Scene {
             //if the game hasn't started, start the game
             if(!this.gameStart){
                 this.gameStart = true;
+                this.gameOver = false;
+                this.distance = 0;
+                speedModifier = 1;
                 this.sfxNoise.play();
                 this.sfxRun.play();
                 this.tempText.text = "";
+                if(this.currentObstacle != null)
+                    this.currentObstacle.end();
                 this.beginRandom();
+                this.horseRun(this.p1Horse);
             }
             // else, make the horse jump
             else{
@@ -131,7 +137,7 @@ class Play extends Phaser.Scene {
 
         //update all objects
         this.p1Horse.update();
-        if(this.currentObstacle != null){
+        if(this.currentObstacle != null && !this.gameOver && this.gameStart){
             this.currentObstacle.update();
 
             //if an obstacle falls off screen, spawn new one
@@ -145,6 +151,12 @@ class Play extends Phaser.Scene {
         if(!this.gameOver && this.gameStart){ //if game hasnt ended and has been started
             this.distance += delta * speedModifier;
             this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100);
+        }
+
+        //if game over, stop everything
+        if(this.gameOver && this.gameStart){
+            this.gameStart = false;
+            this.tempText.text = "PRESS SPACE TO RESTART";
         }
 
         //speed incrementation
@@ -174,12 +186,13 @@ class Play extends Phaser.Scene {
             speedModifier += 0.2;
         
         //check collisions
-        if(this.checkCollision(this.p1Horse, this.currentObstacle)) {
+        if(this.currentObstacle != null && this.checkCollision(this.p1Horse, this.currentObstacle)) {
             this.gameOver = true;
         }
     }
 
     horseJump(horse){
+        //this.anims.stop();
         // temporarily hide horse
         horse.alpha = 0;
         // play jump animation at horse's position
@@ -189,6 +202,7 @@ class Play extends Phaser.Scene {
             horse.alpha = 1;                     // make horse visible again
             jump.destroy();                     // remove jump sprite
             this.sfxRun.play();
+            this.p1Horse.anims.play('run');
         });
     }
 
