@@ -9,6 +9,9 @@ class Play extends Phaser.Scene {
         this.load.image('background', './assets/playBackground.png');
         this.load.image('defaultTexture', './assets/defaultTexture.jpg');
         this.load.image('horse', './assets/horse.png');
+
+        // load spritesheet
+        this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
     }
 
     create() {
@@ -70,6 +73,13 @@ class Play extends Phaser.Scene {
 
         //game start flag
         this.gameStart = false;
+
+        // animation config
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('horseJump', { start: 0, end: 8, first: 0}),
+            framerate: 5,
+        });
         
     }
 
@@ -83,10 +93,11 @@ class Play extends Phaser.Scene {
                 this.tempText.text = "";
                 this.beginRandom();
             }
+            // else, make the horse jump
             else{
                 console.log("Horse Jump Triggered");
                 console.log(speedModifier);
-                this.horseJump();
+                this.horseJump(this.p1Horse);
             }
         }
 
@@ -131,10 +142,33 @@ class Play extends Phaser.Scene {
             speedModifier += 0.2;
         else if(temp > 1000 && speedModifier.toFixed(1) == 2.8)
             speedModifier += 0.2;
+        
+        //check collisions
+        if(this.checkCollision(this.p1Horse, this.obstacle1)) {
+            this.gameOver = true;
+        }
+        if(this.checkCollision(this.p1Horse, this.obstacle2)) {
+            this.gameOver = true;
+        }
+        if(this.checkCollision(this.p1Horse, this.obstacle3)) {
+            this.gameOver = true;
+        }
     }
 
-    horseJump(){
-        this.p1Horse.jump();
+    horseJump(horse){
+        // temporarily hide horse
+        horse.alpha = 0;
+
+        // play jump animation at horse's position
+        let jump = this.add.sprite(horse.x, horse.y, 'horseJump').setOrigin(0, 0); 
+        jump.anims.play('jump');             // play jump animation
+        jump.on('animationcomplete', () => {    // callback after anim completes
+            //horse.reset();                       // reset horse position
+            horse.alpha = 1;                     // make horse visible again
+            jump.destroy();                     // remove jump sprite
+        });
+        
+        //this.sound.play("sfx_jump");
     }
 
     //used for when the obstacle reaches left hand side - set inactive
@@ -161,5 +195,16 @@ class Play extends Phaser.Scene {
                 console.error("Invalid random obstacle attempted activation.");
         }
     }
-    
+
+    checkCollision(obstacle, horse) {  // collision function from rocket patrol
+        // simple AABB checking
+        if (obstacle.x < horse.x + horse.width &&
+            obstacle.x + obstacle.width > horse.x &&
+            obstacle.y < horse.y + horse.height &&
+            obstacle.height + obstacle.y > horse.y) {
+                return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -6,8 +6,13 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
+        // menu images
         this.load.image('farm', './assets/menu.png');
         this.load.image('horse', './assets/horse.png');
+
+        // game audio
+        //this.load.audio('sfx_jump', './assets/jump.mp3');
+        //this.load.audio('sfx_gallop', './assets/horserunning.mp3');
     }
 
     create() {

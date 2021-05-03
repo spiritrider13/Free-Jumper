@@ -26,3 +26,9 @@ Date Completed:
 4/30/21
 
 Creative Tilt:
+
+*************
+
+Current known bugs:
+
+When playing after going to controls, the controls background stays on screen

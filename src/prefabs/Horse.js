@@ -15,7 +15,4 @@ class Horse extends Phaser.GameObjects.Sprite {
         this.x = game.config.width;
     }
 
-    jump(){
-
-    }
 }
