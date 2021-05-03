@@ -6,7 +6,7 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', './assets/playBackground.png');
+        this.load.image('playbackground', './assets/playBackground.png');
         this.load.image('obstacle0', './assets/obstacle-1.png');
         this.load.image('obstacle1', './assets/obstacle2.png');
         this.load.image('obstacle2', './assets/obstacle3.png');
@@ -24,13 +24,13 @@ class Play extends Phaser.Scene {
         this.sfxRun = this.sound.add('sfx-run',{ volume: 0.8, loop: true }); 
         this.sfxNoise = this.sound.add('sfx-noise',{ volume: 0.8 });
         // background
-        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
+        this.playbackground = this.add.tileSprite(0, 0, 640, 480, 'playbackground').setOrigin(0, 0);
 
         // UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0xf3f8e2).setOrigin(0,0);
 
         // add player horse
-        this.p1Horse = new Horse(this, 50, 300, 'horse', 128, 80).setOrigin(0, 0);
+        this.p1Horse = new Horse(this, 50, 350, 'horse', 128, 80).setOrigin(0, 0);
 
         // instantiate obstacles
         //parameters go by (texture type, scene, x, y, default texture, frame)
@@ -202,6 +202,10 @@ class Play extends Phaser.Scene {
         });
         
         //this.sound.play("sfx_jump");
+    }
+
+    horseRun(horse){
+        
     }
 
     //used for when the obstacle reaches left hand side - set inactive
