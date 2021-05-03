@@ -15,9 +15,14 @@ class Play extends Phaser.Scene {
         // load spritesheet
         this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
         this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 112, frameHeight: 78, startFrame: 0, endFrame: 2});
+
+        this.load.audio('sfx-run', './assets/horserunning.mp3');
+        this.load.audio('sfx-noise', './assets/noise.mp3');
     }
 
     create() {
+        this.sfxRun = this.sound.add('sfx-run',{ volume: 0.8, loop: true }); 
+        this.sfxNoise = this.sound.add('sfx-noise',{ volume: 0.8 });
         // background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
@@ -103,6 +108,8 @@ class Play extends Phaser.Scene {
             //if the game hasn't started, start the game
             if(!this.gameStart){
                 this.gameStart = true;
+                this.sfxNoise.play();
+                this.sfxRun.play();
                 this.tempText.text = "";
                 this.beginRandom();
             }
@@ -110,6 +117,7 @@ class Play extends Phaser.Scene {
             else{
                 console.log("Horse Jump Triggered");
                 console.log(speedModifier);
+                this.sfxRun.stop(); 
                 this.horseJump(this.p1Horse);
             }
         }
@@ -190,6 +198,7 @@ class Play extends Phaser.Scene {
         jump.on('animationcomplete', () => {    // callback after anim completes
             horse.alpha = 1;                     // make horse visible again
             jump.destroy();                     // remove jump sprite
+            this.sfxRun.play();
         });
         
         //this.sound.play("sfx_jump");
