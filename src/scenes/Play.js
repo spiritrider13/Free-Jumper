@@ -88,7 +88,7 @@ class Play extends Phaser.Scene {
         // run animation config
         this.anims.create({
             key: 'run',
-            frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 9, first: 0}),
+            frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 8, first: 0}),
             framerate: .5,
             repeat: -1
         });
@@ -161,6 +161,7 @@ class Play extends Phaser.Scene {
         if(this.gameOver && this.gameStart){
             this.gameStart = false;
             this.tempText.text = "PRESS SPACE TO RESTART";
+            //this.menuReturn = this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for menu', hudConfig).setOrigin(0.5);  
         }
 
         //speed incrementation
