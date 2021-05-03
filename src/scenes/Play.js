@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
 
         // load spritesheet
         this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
-        this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 112, frameHeight: 78, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 128, frameHeight: 78, startFrame: 0, endFrame: 8});
 
         this.load.audio('sfx-run', './assets/horserunning.mp3');
         this.load.audio('sfx-noise', './assets/noise.mp3');
@@ -88,8 +88,8 @@ class Play extends Phaser.Scene {
         // run animation config
         this.anims.create({
             key: 'run',
-            frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 2, first: 0}),
-            framerate: 1,
+            frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 9, first: 0}),
+            framerate: .5,
             repeat: -1
         });
 
@@ -214,13 +214,13 @@ class Play extends Phaser.Scene {
 
     horseRun(horse){
         horse.alpha = 0;
-            let run = this.add.sprite(horse.x, horse.y, 'horseRun').setOrigin(0, 0); 
-            run.anims.play('run');             // play jump animation
-            run.on('animationcomplete', () => {    // callback after anim completes
-                //horse.reset();                       // reset horse position
-                //horse.alpha = 1;                     // make horse visible again
-                run.destroy();                     // remove jump sprite
-            });
+        let run = this.add.sprite(horse.x, horse.y, 'horseRun').setOrigin(0, 0); 
+        run.anims.play('run');             // play jump animation
+        run.on('animationcomplete', () => {    // callback after anim completes
+            //horse.reset();                       // reset horse position
+            //horse.alpha = 1;                     // make horse visible again
+            //run.destroy();                     // remove jump sprite
+        });
     }
 
     //used for when the obstacle reaches left hand side - set inactive
