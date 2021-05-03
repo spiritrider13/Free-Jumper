@@ -12,6 +12,7 @@ class Play extends Phaser.Scene {
 
         // load spritesheet
         this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
+        this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 112, frameHeight: 78, startFrame: 0, endFrame: 2});
     }
 
     create() {
@@ -74,16 +75,26 @@ class Play extends Phaser.Scene {
         //game start flag
         this.gameStart = false;
 
-        // animation config
+        // run animation config
+        this.anims.create({
+            key: 'run',
+            frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 2, first: 0}),
+            framerate: 1,
+            repeat: -1
+        });
+
+        // jump animation config
         this.anims.create({
             key: 'jump',
             frames: this.anims.generateFrameNumbers('horseJump', { start: 0, end: 8, first: 0}),
-            framerate: 5,
+            framerate: 5
         });
         
     }
 
     update(time, delta) {
+        this.p1Horse.alpha = 0;
+
         //if space key is pressed...
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
 
@@ -99,6 +110,18 @@ class Play extends Phaser.Scene {
                 console.log(speedModifier);
                 this.horseJump(this.p1Horse);
             }
+        }
+
+        // Running animation
+        if(!this.gameOver){
+            this.p1Horse.alpha = 0;
+            let run = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0, 0); 
+            run.anims.play('run');             // play jump animation
+            run.on('animationcomplete', () => {    // callback after anim completes
+                //horse.reset();                       // reset horse position
+                //horse.alpha = 1;                     // make horse visible again
+                run.destroy();                     // remove jump sprite
+            });
         }
 
         //update all objects
@@ -163,7 +186,6 @@ class Play extends Phaser.Scene {
         let jump = this.add.sprite(horse.x, horse.y, 'horseJump').setOrigin(0, 0); 
         jump.anims.play('jump');             // play jump animation
         jump.on('animationcomplete', () => {    // callback after anim completes
-            //horse.reset();                       // reset horse position
             horse.alpha = 1;                     // make horse visible again
             jump.destroy();                     // remove jump sprite
         });
