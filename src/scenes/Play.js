@@ -18,9 +18,12 @@ class Play extends Phaser.Scene {
 
         this.load.audio('sfx-run', './assets/horserunning.mp3');
         this.load.audio('sfx-noise', './assets/noise.mp3');
+        this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
     }
 
     create() {
+        this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
+        this.backgroundMusic.play();
         this.sfxRun = this.sound.add('sfx-run',{ volume: 0.8, loop: true }); 
         this.sfxNoise = this.sound.add('sfx-noise',{ volume: 0.8 });
         // background

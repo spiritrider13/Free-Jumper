@@ -50,9 +50,11 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.backgroundMusic.stop();
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
+            this.backgroundMusic.stop();
             this.scene.start('controlsScene');
         }
     }
