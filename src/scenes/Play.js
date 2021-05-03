@@ -96,7 +96,11 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('horseJump', { start: 0, end: 8, first: 0}),
             framerate: 5
         });
-        
+
+         // Running animation
+         if(!this.gameOver){
+            this.horseRun(this.p1Horse);
+        }
     }
 
     update(time, delta) {
@@ -120,18 +124,6 @@ class Play extends Phaser.Scene {
                 this.sfxRun.stop(); 
                 this.horseJump(this.p1Horse);
             }
-        }
-
-        // Running animation
-        if(!this.gameOver){
-            this.p1Horse.alpha = 0;
-            let run = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0, 0); 
-            run.anims.play('run');             // play jump animation
-            run.on('animationcomplete', () => {    // callback after anim completes
-                //horse.reset();                       // reset horse position
-                //horse.alpha = 1;                     // make horse visible again
-                run.destroy();                     // remove jump sprite
-            });
         }
 
         //update all objects
@@ -191,7 +183,6 @@ class Play extends Phaser.Scene {
     horseJump(horse){
         // temporarily hide horse
         horse.alpha = 0;
-
         // play jump animation at horse's position
         let jump = this.add.sprite(horse.x, horse.y, 'horseJump').setOrigin(0, 0); 
         jump.anims.play('jump');             // play jump animation
@@ -200,12 +191,17 @@ class Play extends Phaser.Scene {
             jump.destroy();                     // remove jump sprite
             this.sfxRun.play();
         });
-        
-        //this.sound.play("sfx_jump");
     }
 
     horseRun(horse){
-        
+        horse.alpha = 0;
+            let run = this.add.sprite(horse.x, horse.y, 'horseRun').setOrigin(0, 0); 
+            run.anims.play('run');             // play jump animation
+            run.on('animationcomplete', () => {    // callback after anim completes
+                //horse.reset();                       // reset horse position
+                //horse.alpha = 1;                     // make horse visible again
+                run.destroy();                     // remove jump sprite
+            });
     }
 
     //used for when the obstacle reaches left hand side - set inactive
