@@ -129,9 +129,11 @@ class Play extends Phaser.Scene {
             // else, make the horse jump
             else{
                 console.log("Horse Jump Triggered");
-                //console.log(speedModifier);
+
+                //make horse immune
                 this.p1Horse.immune = true;
                 this.p1Horse.immuneTimer = 0;
+
                 this.sfxRun.stop(); 
                 this.horseJump(this.p1Horse);
             }
@@ -189,6 +191,7 @@ class Play extends Phaser.Scene {
         
         //check collisions
         if(this.currentObstacle != null && this.checkCollision(this.p1Horse, this.currentObstacle)) {
+            //if horse is immune, game isn't over
             if(this.p1Horse.immune == false)
                 this.gameOver = true;
         }

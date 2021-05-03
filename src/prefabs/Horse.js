@@ -11,7 +11,9 @@ class Horse extends Phaser.GameObjects.Sprite {
     }
 
     update(time, delta){
+
         if(this.immune){
+            //while its immune, itll have a timer that when it reaches a target, will disable immune
             this.immuneTimer += delta;
             if(this.immuneTimer >= 1000){
                 this.immune = false;
