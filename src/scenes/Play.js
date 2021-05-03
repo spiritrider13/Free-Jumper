@@ -117,7 +117,7 @@ class Play extends Phaser.Scene {
 
         // Running animation
         if(this.gameStart){
-            //this.p1Horse.alpha = 0;            // remove horse sprite
+            this.p1Horse.alpha = 0;            // remove horse sprite
             let run = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0, 0); 
             run.anims.play('run');             // play jump animation
             run.on('animationcomplete', () => {    // callback after anim completes
