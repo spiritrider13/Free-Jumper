@@ -130,6 +130,8 @@ class Play extends Phaser.Scene {
         this.p1Horse.update();
         if(this.currentObstacle != null){
             this.currentObstacle.update();
+
+            //if an obstacle falls off screen, spawn new one
             if(this.currentObstacle.x <= 0 - this.currentObstacle.width){
                 this.currentObstacle.end();
                 this.beginRandom();
@@ -169,13 +171,7 @@ class Play extends Phaser.Scene {
             speedModifier += 0.2;
         
         //check collisions
-        if(this.checkCollision(this.p1Horse, this.obstacle1)) {
-            this.gameOver = true;
-        }
-        if(this.checkCollision(this.p1Horse, this.obstacle2)) {
-            this.gameOver = true;
-        }
-        if(this.checkCollision(this.p1Horse, this.obstacle3)) {
+        if(this.checkCollision(this.p1Horse, this.currentObstacle)) {
             this.gameOver = true;
         }
     }
