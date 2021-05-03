@@ -8,12 +8,11 @@ class Controls extends Phaser.Scene {
     preload() {
         // load images
         this.load.image('background', './assets/controlMenu.png'); 
-        this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
     }
 
     create() {
-        this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
-        this.backgroundMusic.play();
+        /*this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
+        this.backgroundMusic.play();*/
         // background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);    
 

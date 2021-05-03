@@ -11,13 +11,13 @@ class Menu extends Phaser.Scene {
         this.load.image('horse', './assets/horse.png');
 
         // game audio
-        this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
+        //this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
         //this.load.audio('sfx_gallop', './assets/horserunning.mp3'); 
     }
 
     create() {
-        this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
-        this.backgroundMusic.play();
+        //this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
+        //this.backgroundMusic.play();
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
@@ -36,7 +36,7 @@ class Menu extends Phaser.Scene {
         this.farm = this.add.tileSprite(0, 0, 640, 480, 'farm').setOrigin(0, 0);
 
         // display horse
-        //this.horse = this.add.tileSprite(50, 300, 128, 80, 'horse').setOrigin(0, 0);
+        this.horse = this.add.tileSprite(50, 300, 128, 80, 'horse').setOrigin(0, 0);
 
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ENDLESS RIDER', menuConfig).setOrigin(0.5);
@@ -50,11 +50,11 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            this.backgroundMusic.stop();
+            //this.backgroundMusic.stop();
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-            this.backgroundMusic.stop();
+            //this.backgroundMusic.stop();
             this.scene.start('controlsScene');
         }
     }
