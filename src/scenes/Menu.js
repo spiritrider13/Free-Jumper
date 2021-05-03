@@ -11,11 +11,13 @@ class Menu extends Phaser.Scene {
         this.load.image('horse', './assets/horse.png');
 
         // game audio
-        //this.load.audio('sfx_jump', './assets/jump.mp3');
-        //this.load.audio('sfx_gallop', './assets/horserunning.mp3');
+        this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
+        //this.load.audio('sfx_gallop', './assets/horserunning.mp3'); 
     }
 
     create() {
+        this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
+        this.backgroundMusic.play();
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
