@@ -129,14 +129,16 @@ class Play extends Phaser.Scene {
             // else, make the horse jump
             else{
                 console.log("Horse Jump Triggered");
-                console.log(speedModifier);
+                //console.log(speedModifier);
+                this.p1Horse.immune = true;
+                this.p1Horse.immuneTimer = 0;
                 this.sfxRun.stop(); 
                 this.horseJump(this.p1Horse);
             }
         }
 
         //update all objects
-        this.p1Horse.update();
+        this.p1Horse.update(time, delta);
         if(this.currentObstacle != null && !this.gameOver && this.gameStart){
             this.currentObstacle.update();
 
@@ -187,7 +189,8 @@ class Play extends Phaser.Scene {
         
         //check collisions
         if(this.currentObstacle != null && this.checkCollision(this.p1Horse, this.currentObstacle)) {
-            this.gameOver = true;
+            if(this.p1Horse.immune == false)
+                this.gameOver = true;
         }
     }
 
