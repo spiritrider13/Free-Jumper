@@ -32,3 +32,4 @@ Creative Tilt:
 Current known bugs:
 
 When playing after going to controls, the controls background stays on screen
+distance traveled stops after jump
