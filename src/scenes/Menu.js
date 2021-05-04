@@ -35,9 +35,6 @@ class Menu extends Phaser.Scene {
         // display menu background
         this.farm = this.add.tileSprite(0, 0, 640, 480, 'farm').setOrigin(0, 0);
 
-        // display horse
-        this.horse = this.add.tileSprite(50, 300, 128, 80, 'horse').setOrigin(0, 0);
-
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ENDLESS RIDER', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for controls', menuConfig).setOrigin(0.5);  

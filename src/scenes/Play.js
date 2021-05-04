@@ -33,7 +33,7 @@ class Play extends Phaser.Scene {
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0xf3f8e2).setOrigin(0,0);
 
         // add player horse
-        this.p1Horse = new Horse(this, 50, 350, 'horse', 128, 80).setOrigin(0, 0);
+        this.p1Horse = new Horse(this, 50, 350, 'horse', 128, 80).setOrigin(0);
 
         // instantiate obstacles
         //parameters go by (texture type, scene, x, y, default texture, frame)
@@ -93,6 +93,8 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
+        //this.p1HorseAnims = this.add.sprite(200, 200, 'horseRun').setOrigin(0);
+
         // jump animation config
         this.anims.create({
             key: 'jump',
@@ -100,14 +102,11 @@ class Play extends Phaser.Scene {
             framerate: 5
         });
 
-         // Running animation
-         if(!this.gameOver){
-            this.horseRun(this.p1Horse);
-        }
+        this.p1HorseAnims = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0);
+
     }
 
     update(time, delta) {
-        this.p1Horse.alpha = 0;
 
         //if space key is pressed...
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
@@ -124,7 +123,10 @@ class Play extends Phaser.Scene {
                 if(this.currentObstacle != null)
                     this.currentObstacle.end();
                 this.beginRandom();
-                this.horseRun(this.p1Horse);
+                //this.horseRun(this.p1Horse);
+                this.p1HorseAnims.anims.play('run', true);
+                this.p1Horse.visible = false;
+                this.p1HorseAnims.visible = true;
             }
             // else, make the horse jump
             else{
@@ -135,12 +137,17 @@ class Play extends Phaser.Scene {
                 this.p1Horse.immuneTimer = 0;
 
                 this.sfxRun.stop(); 
-                this.horseJump(this.p1Horse);
+                //this.horseJump(this.p1Horse);
+                this.p1HorseAnims.anims.play('jump', true).on('animationcomplete', () => {this.p1HorseAnims.anims.play('run', true)});
             }
         }
 
+        
+        
+        
         //update all objects
         this.p1Horse.update(time, delta);
+        //console.log(this.p1Horse.immune);
         if(this.currentObstacle != null && !this.gameOver && this.gameStart){
             this.currentObstacle.update();
 
@@ -150,6 +157,24 @@ class Play extends Phaser.Scene {
                 this.beginRandom();
             }
         }
+
+
+
+
+        //check collisions
+        if(this.currentObstacle != null && this.checkCollision(this.p1Horse, this.currentObstacle)) {
+            //console.log("Horse collided with Obstacle " + this.p1Horse.immune);
+            //if horse is immune, game isn't over
+            if(this.p1Horse.immune == false){
+                this.gameOver = true;
+                this.p1Horse.visible = true;
+                this.p1HorseAnims.stop();
+                this.p1HorseAnims.visible = false;
+            }
+        }
+        
+        
+        
         
         //updating the distance
         if(!this.gameOver && this.gameStart){ //if game hasnt ended and has been started
@@ -157,6 +182,10 @@ class Play extends Phaser.Scene {
             this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100);
         }
 
+        
+        
+        
+        
         //if game over, stop everything
         if(this.gameOver && this.gameStart){
             this.gameStart = false;
@@ -164,6 +193,9 @@ class Play extends Phaser.Scene {
             //this.menuReturn = this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for menu', hudConfig).setOrigin(0.5);  
         }
 
+        
+        
+        
         //speed incrementation
         //Every 100 meters, the horse's speedModifier increases by 0.2
         //the "toFixed(1)" method rounds to nearest tenth.
@@ -190,39 +222,21 @@ class Play extends Phaser.Scene {
         else if(temp > 1000 && speedModifier.toFixed(1) == 2.8)
             speedModifier += 0.2;
         
-        //check collisions
-        if(this.currentObstacle != null && this.checkCollision(this.p1Horse, this.currentObstacle)) {
-            //if horse is immune, game isn't over
-            if(this.p1Horse.immune == false)
-                this.gameOver = true;
-        }
+        
+        
+        
+        
+        
+
     }
 
-    horseJump(horse){
-        //this.anims.stop();
-        // temporarily hide horse
-        horse.alpha = 0;
-        // play jump animation at horse's position
-        let jump = this.add.sprite(horse.x, horse.y, 'horseJump').setOrigin(0, 0); 
-        jump.anims.play('jump');             // play jump animation
-        jump.on('animationcomplete', () => {    // callback after anim completes
-            horse.alpha = 1;                     // make horse visible again
-            jump.destroy();                     // remove jump sprite
-            this.sfxRun.play();
-            this.p1Horse.anims.play('run');
-        });
-    }
 
-    horseRun(horse){
-        horse.alpha = 0;
-        let run = this.add.sprite(horse.x, horse.y, 'horseRun').setOrigin(0, 0); 
-        run.anims.play('run');             // play jump animation
-        run.on('animationcomplete', () => {    // callback after anim completes
-            //horse.reset();                       // reset horse position
-            //horse.alpha = 1;                     // make horse visible again
-            //run.destroy();                     // remove jump sprite
-        });
-    }
+
+
+
+
+
+
 
     //used for when the obstacle reaches left hand side - set inactive
     beginRandom() {
