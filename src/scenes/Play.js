@@ -103,6 +103,7 @@ class Play extends Phaser.Scene {
         });
 
         this.p1HorseAnims = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0);
+        this.p1HorseAnims.visible = false;
 
     }
 
