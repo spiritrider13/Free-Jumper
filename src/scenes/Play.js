@@ -38,7 +38,7 @@ class Play extends Phaser.Scene {
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0xf3f8e2).setOrigin(0,0);
 
         // add player horse
-        this.p1Horse = new Horse(this, 50, 350, 'horse', 128, 80).setOrigin(0);
+        this.p1Horse = new Horse(this, 50, 430, 'horse', 128, 80).setOrigin(0, 1);
 
         // instantiate obstacles
         //parameters go by (texture type, scene, x, y, default texture, frame)
@@ -93,6 +93,11 @@ class Play extends Phaser.Scene {
         //game start flag
         this.gameStart = false;
 
+        //restart cooldown
+        this.cooldown = 500;
+        this.cooldownTimer = 500;
+        this.cooldownFlag = false;
+
         // run animation config
         this.anims.create({
             key: 'run',
@@ -108,17 +113,27 @@ class Play extends Phaser.Scene {
             framerate: 3
         });
 
-        this.p1HorseAnims = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0);
+        this.p1HorseAnims = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0, 1);
         this.p1HorseAnims.visible = false;
     }
 
     update(time, delta) {
 
+        //game restart cooldown process
+        if(!this.gameStart){
+            this.cooldownTimer += delta;
+            if(this.cooldownTimer >= this.cooldown){
+                this.cooldownFlag = true;
+            }
+        }
+
         //if space key is pressed...
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
 
             //if the game hasn't started, start the game
-            if(!this.gameStart){
+            if(!this.gameStart && this.cooldownFlag == true){
+                this.cooldownFlag = false;
+                this.cooldownTimer = 0;
                 this.gameStart = true;
                 this.gameOver = false;
                 this.distance = 0;
@@ -134,14 +149,19 @@ class Play extends Phaser.Scene {
                 this.p1HorseAnims.visible = true;
             }
             // else, make the horse jump
-            else{
+            else if(!this.gameOver){
                 console.log("Horse Jump Triggered");
 
                 //make horse immune
-                this.p1Horse.immune = true;
-                this.p1Horse.immuneTimer = 0;
-                this.sfxJump.play();
-                this.sfxGallop.stop();
+                if(!this.p1Horse.immune){
+                    this.p1Horse.immune = true;
+                    this.p1Horse.immuneTimer = 0;
+                    this.sfxJump.play();
+                    this.sfxGallop.stop();
+                }else{
+                    this.sfxWhine.play();
+                }
+                
 
                 this.p1HorseAnims.anims.play('jump', true).on('animationcomplete', () => 
                 {   this.p1HorseAnims.anims.play('run', true),
@@ -154,6 +174,7 @@ class Play extends Phaser.Scene {
         }
         
         //update all objects
+        this.p1HorseAnims.anims.msPerFrame = 75 / speedModifier;
         this.p1Horse.update(time, delta);
         //console.log(this.p1Horse.immune);
         if(this.currentObstacle != null && !this.gameOver && this.gameStart){
@@ -222,15 +243,15 @@ class Play extends Phaser.Scene {
         else if(temp > 500 && speedModifier.toFixed(1) == 1.8)
             speedModifier += 0.2;
         else if(temp > 600 && speedModifier.toFixed(1) == 2)
-            speedModifier += 0.2;
-        else if(temp > 700 && speedModifier.toFixed(1) == 2.2)
-            speedModifier += 0.2;
-        else if(temp > 800 && speedModifier.toFixed(1) == 2.4)
-            speedModifier += 0.2;
-        else if(temp > 900 && speedModifier.toFixed(1) == 2.6)
-            speedModifier += 0.2;
-        else if(temp > 1000 && speedModifier.toFixed(1) == 2.8)
-            speedModifier += 0.2;
+            speedModifier += 0.1;
+        else if(temp > 700 && speedModifier.toFixed(1) == 2.1)
+            speedModifier += 0.1;
+        else if(temp > 800 && speedModifier.toFixed(1) == 2.2)
+            speedModifier += 0.1;
+        else if(temp > 900 && speedModifier.toFixed(1) == 2.3)
+            speedModifier += 0.1;
+        else if(temp > 1000 && speedModifier.toFixed(1) == 2.4)
+            speedModifier += 0.1;
     }
 
     //used for when the obstacle reaches left hand side - set inactive
