@@ -14,7 +14,7 @@ class Credits extends Phaser.Scene {
         /*this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
         this.backgroundMusic.play();*/
         // background
-        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);    
+        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0);    
 
         // show menu text
         //this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'CONTROLS', Menu.menuConfig).setOrigin(0.5);

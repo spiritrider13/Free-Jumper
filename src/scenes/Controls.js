@@ -26,7 +26,7 @@ class Controls extends Phaser.Scene {
     }
 
     update() {
-        // if right arrow pressed, return to menu
+        // if left arrow pressed, return to menu
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start('menuScene');
         }

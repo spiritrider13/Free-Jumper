@@ -151,7 +151,7 @@ class Play extends Phaser.Scene {
         }
 
         if(this.gameStart && !this.gameOver){
-            this.playbackground.tilePositionX += 2;
+            this.playbackground.tilePositionX += (2 * speedModifier) - .25;
         }
         
         
