@@ -31,19 +31,25 @@ class Menu extends Phaser.Scene {
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2.75 - borderUISize - borderPadding, 'ENDLESS RIDER', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2.3, 'Press RIGHT for controls', menuConfig).setOrigin(0.5);  
-        this.add.text(game.config.width/2, game.config.height/2.3 + borderUISize + borderPadding, 'Press LEFT to play', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2.3 + borderUISize + borderPadding, 'Press LEFT for credits', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/1.75 + borderUISize + borderPadding, 'Press SPACE to play', menuConfig).setOrigin(0.5);
+
         
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            this.scene.start('playScene');
+            this.scene.start('creditsScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
             this.scene.start('controlsScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.scene.start('playScene');
         }
     }
 }

@@ -201,8 +201,8 @@ class Play extends Phaser.Scene {
         //if game over, stop everything
         if(this.gameOver && this.gameStart){
             this.gameStart = false;
-            this.tempText.text = "PRESS SPACE TO RESTART";
-            this.returnText.text = "PRESS LEFT TO RETURN TO MAIN";
+            this.tempText.text = "Press SPACE to restart";
+            this.returnText.text = "Press LEFT to return to main menu";
 
             if(Math.floor(this.distance/100) > this.highestScore){
                 this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100);
