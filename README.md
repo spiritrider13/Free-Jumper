@@ -12,3 +12,4 @@ Date Completed:
 - 4/30/21
 
 Creative Tilt:
+- The game features detailed animations that consist of many frames that connect fluidly.
