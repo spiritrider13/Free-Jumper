@@ -8,16 +8,9 @@ class Menu extends Phaser.Scene {
     preload() {
         // menu images
         this.load.image('farm', './assets/menu.png');
-        this.load.image('horse', './assets/horse.png');
-
-        // game audio
-        //this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
-        //this.load.audio('sfx_gallop', './assets/horserunning.mp3'); 
     }
 
     create() {
-        //this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
-        //this.backgroundMusic.play();
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
@@ -47,11 +40,9 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            //this.backgroundMusic.stop();
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-            //this.backgroundMusic.stop();
             this.scene.start('controlsScene');
         }
     }

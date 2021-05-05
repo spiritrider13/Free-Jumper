@@ -16,8 +16,6 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
         this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 128, frameHeight: 78, startFrame: 0, endFrame: 8});
 
-        this.load.audio('sfx-run', './assets/horserunning.mp3');
-        this.load.audio('sfx-noise', './assets/noise.mp3');
         this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
         this.load.audio('horseJump', './assets/horseJump.wav');
         this.load.audio('horseGallop', './assets/horseGallop.mp3');
