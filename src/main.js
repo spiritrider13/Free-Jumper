@@ -22,8 +22,6 @@ we think our animations compliment that fact.
 
 
 
-// Project info included in README.md
-
 let config = {
     type: Phaser.CANVAS,
     width: 640,
