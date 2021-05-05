@@ -1,6 +1,7 @@
 /*
 
 
+Game name: Free Jumper - Game date: 5/5/21
 Code written by Sam Vik, Aria Altenburg and Jason Lee.
 
 Something we thought we did technically interesting was our obstacle spawn and hit detection.
