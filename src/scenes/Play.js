@@ -203,7 +203,7 @@ class Play extends Phaser.Scene {
         //updating the distance
         if(!this.gameOver && this.gameStart){ //if game hasnt ended and has been started
             this.distance += delta * speedModifier;
-            this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100);
+            this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100) + " m";
         }
 
         //if game over, stop everything
@@ -213,7 +213,7 @@ class Play extends Phaser.Scene {
             this.returnText.text = "Press LEFT to return to main menu";
 
             if(Math.floor(this.distance/100) > distanceRecord){
-                this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100);
+                this.highDisDisplay.text = 'Session Record: ' + Math.floor(this.distance/100) + " m";
                 this.currentHigh = Math.floor(this.distance/100); 
                 if(this.currentHigh > distanceRecord){
                     distanceRecord = this.currentHigh;
