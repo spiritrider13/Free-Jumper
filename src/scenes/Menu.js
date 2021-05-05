@@ -29,7 +29,7 @@ class Menu extends Phaser.Scene {
         this.farm = this.add.tileSprite(0, 0, 640, 480, 'farm').setOrigin(0, 0);
 
         // show menu text
-        this.add.text(game.config.width/2, game.config.height/2.75 - borderUISize - borderPadding, 'ENDLESS RIDER', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2.75 - borderUISize - borderPadding, 'FREE JUMPER', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2.3, 'Press RIGHT for controls', menuConfig).setOrigin(0.5);  
         this.add.text(game.config.width/2, game.config.height/2.3 + borderUISize + borderPadding, 'Press LEFT for credits', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/1.75 + borderUISize + borderPadding, 'Press SPACE to play', menuConfig).setOrigin(0.5);
