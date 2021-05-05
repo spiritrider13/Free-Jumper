@@ -16,12 +16,12 @@ class Menu extends Phaser.Scene {
             fontFamily: 'Courier',
             fontSize: '28px',
             backgroundColor: '#f3f8e2', // orange
-            color: '#843605',   // orange text color
+            color: '#000000',   // orange text color
             align: 'right',
-            /*padding: {
+            padding: {
                 top: 5,
                 bottom: 5,
-            },*/
+            },
             fixedWidth: 0
         }   
 
@@ -29,9 +29,9 @@ class Menu extends Phaser.Scene {
         this.farm = this.add.tileSprite(0, 0, 640, 480, 'farm').setOrigin(0, 0);
 
         // show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ENDLESS RIDER', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for controls', menuConfig).setOrigin(0.5);  
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press LEFT to play', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2.75 - borderUISize - borderPadding, 'ENDLESS RIDER', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2.3, 'Press RIGHT for controls', menuConfig).setOrigin(0.5);  
+        this.add.text(game.config.width/2, game.config.height/2.3 + borderUISize + borderPadding, 'Press LEFT to play', menuConfig).setOrigin(0.5);
         
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);

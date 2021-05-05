@@ -209,11 +209,11 @@ class Play extends Phaser.Scene {
                     this.highestScore = this.currentHigh;
                 } 
             }
-
-            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-                this.scene.start('menuScene');
-            }
             //this.menuReturn = this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for menu', hudConfig).setOrigin(0.5);  
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.scene.start('menuScene');
         }
 
         
