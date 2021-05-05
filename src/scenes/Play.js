@@ -76,8 +76,8 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
 
         //add elapsed time and distance to scene
-        this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0', hudConfig);
-        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'RECORD: ' + distanceRecord, hudConfig);
+        this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0 m', hudConfig);
+        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'RECORD: ' + distanceRecord + " m", hudConfig);
 
         //temp spacebar text
         this.tempText = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'PRESS SPACEBAR TO START', hudConfig).setOrigin(0.5);
@@ -203,7 +203,7 @@ class Play extends Phaser.Scene {
         //updating the distance
         if(!this.gameOver && this.gameStart){ //if game hasnt ended and has been started
             this.distance += delta * speedModifier;
-            this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100);
+            this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100) + " m";
         }
 
         //if game over, stop everything
@@ -213,7 +213,7 @@ class Play extends Phaser.Scene {
             this.returnText.text = "Press LEFT to return to main menu";
 
             if(Math.floor(this.distance/100) > distanceRecord){
-                this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100);
+                this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100) + " m";
                 this.currentHigh = Math.floor(this.distance/100); 
                 if(this.currentHigh > distanceRecord){
                     distanceRecord = this.currentHigh;
