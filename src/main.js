@@ -49,5 +49,8 @@ let borderPadding = borderUISize / 3;
 //a modifying double that speeds up obstacles and the distance over time
 let speedModifier = 1;
 
+//record this session's furthest record;
+let distanceRecord = 0;
+
 // reserve keyboard variables
 let keySPACE, keyLEFT, keyRIGHT;

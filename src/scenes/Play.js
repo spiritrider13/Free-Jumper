@@ -22,7 +22,6 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.highestScore = 0;
         this.currentHigh = 0;
         
         this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.3, loop: true });
@@ -78,7 +77,7 @@ class Play extends Phaser.Scene {
 
         //add elapsed time and distance to scene
         this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0', hudConfig);
-        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'RECORD: 0', hudConfig);
+        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'RECORD: ' + distanceRecord, hudConfig);
 
         //temp spacebar text
         this.tempText = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'PRESS SPACEBAR TO START', hudConfig).setOrigin(0.5);
@@ -213,11 +212,11 @@ class Play extends Phaser.Scene {
             this.tempText.text = "Press SPACE to restart";
             this.returnText.text = "Press LEFT to return to main menu";
 
-            if(Math.floor(this.distance/100) > this.highestScore){
+            if(Math.floor(this.distance/100) > distanceRecord){
                 this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100);
                 this.currentHigh = Math.floor(this.distance/100); 
-                if(this.currentHigh > this.highestScore){
-                    this.highestScore = this.currentHigh;
+                if(this.currentHigh > distanceRecord){
+                    distanceRecord = this.currentHigh;
                 } 
             }
         }
