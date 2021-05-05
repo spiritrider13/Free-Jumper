@@ -19,13 +19,17 @@ class Play extends Phaser.Scene {
         this.load.audio('sfx-run', './assets/horserunning.mp3');
         this.load.audio('sfx-noise', './assets/noise.mp3');
         this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
+        this.load.audio('horseJump', './assets/horseJump.wav');
+        this.load.audio('horseGallop', './assets/horseGallop.mp3');
+        this.load.audio('horseWhine', './assets/horseWhine.wav');
     }
 
     create() {
-        this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
+        this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.3, loop: true });
         this.backgroundMusic.play();
-        this.sfxRun = this.sound.add('sfx-run',{ volume: 0.8, loop: true }); 
-        this.sfxNoise = this.sound.add('sfx-noise',{ volume: 0.8 });
+        this.sfxJump = this.sound.add('horseJump',{ volume: 1.5 });
+        this.sfxGallop = this.sound.add('horseGallop',{ volume: 0.8 });
+        this.sfxWhine = this.sound.add('horseWhine',{ volume: 1 });
         // background
         this.playbackground = this.add.tileSprite(0, 0, 640, 480, 'playbackground').setOrigin(0, 0);
 
@@ -93,8 +97,6 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-        //this.p1HorseAnims = this.add.sprite(200, 200, 'horseRun').setOrigin(0);
-
         // jump animation config
         this.anims.create({
             key: 'jump',
@@ -118,13 +120,11 @@ class Play extends Phaser.Scene {
                 this.gameOver = false;
                 this.distance = 0;
                 speedModifier = 1;
-                this.sfxNoise.play();
-                this.sfxRun.play();
+                this.sfxGallop.play();
                 this.tempText.text = "";
                 if(this.currentObstacle != null)
                     this.currentObstacle.end();
                 this.beginRandom();
-                //this.horseRun(this.p1Horse);
                 this.p1HorseAnims.anims.play('run', true);
                 this.p1Horse.visible = false;
                 this.p1HorseAnims.visible = true;
@@ -136,10 +136,12 @@ class Play extends Phaser.Scene {
                 //make horse immune
                 this.p1Horse.immune = true;
                 this.p1Horse.immuneTimer = 0;
+                this.sfxJump.play();
+                this.sfxGallop.stop();
 
-                this.sfxRun.stop(); 
-                //this.horseJump(this.p1Horse);
-                this.p1HorseAnims.anims.play('jump', true).on('animationcomplete', () => {this.p1HorseAnims.anims.play('run', true)});
+                this.p1HorseAnims.anims.play('jump', true).on('animationcomplete', () => 
+                {   this.p1HorseAnims.anims.play('run', true),
+                    this.sfxGallop.play()                       });
             }
         }
 
@@ -164,9 +166,11 @@ class Play extends Phaser.Scene {
 
         //check collisions
         if(this.currentObstacle != null && this.checkCollision(this.p1Horse, this.currentObstacle)) {
-            //console.log("Horse collided with Obstacle " + this.p1Horse.immune);
+
             //if horse is immune, game isn't over
             if(this.p1Horse.immune == false){
+                this.sfxGallop.stop();
+                this.sfxWhine.play();
                 this.gameOver = true;
                 this.p1Horse.visible = true;
                 this.p1HorseAnims.stop();
@@ -222,16 +226,7 @@ class Play extends Phaser.Scene {
             speedModifier += 0.2;
         else if(temp > 1000 && speedModifier.toFixed(1) == 2.8)
             speedModifier += 0.2;
-        
-        
-        
-        
-        
-        
-
     }
-
-
 
 
 
