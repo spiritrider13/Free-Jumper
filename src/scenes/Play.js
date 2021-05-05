@@ -150,7 +150,9 @@ class Play extends Phaser.Scene {
             }
         }
 
-        
+        if(this.gameStart && !this.gameOver){
+            this.playbackground.tilePositionX += 2;
+        }
         
         
         //update all objects
