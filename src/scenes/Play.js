@@ -77,7 +77,7 @@ class Play extends Phaser.Scene {
 
         //add elapsed time and distance to scene
         this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0', hudConfig);
-        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'RECORD: ' + distanceRecord, hudConfig);
+        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'Session Record: ' + distanceRecord + " m", hudConfig);
       
         //temp spacebar text
         this.tempText = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'PRESS SPACEBAR TO START', hudConfig).setOrigin(0.5);
@@ -169,7 +169,7 @@ class Play extends Phaser.Scene {
         }
 
         if(this.gameStart && !this.gameOver){
-            this.playbackground.tilePositionX += (2 * speedModifier) - .25;
+            this.playbackground.tilePositionX += (5 * speedModifier) - .5;
         }
         
         //update all objects
@@ -253,7 +253,7 @@ class Play extends Phaser.Scene {
         else if(temp > 1000 && speedModifier.toFixed(1) == 2.4)
             speedModifier += 0.1;
 
-            console.log(game.loop.actualFps);
+        //console.log(game.loop.actualFps);
     }
 
     //used for when the obstacle reaches left hand side - set inactive

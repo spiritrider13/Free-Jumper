@@ -11,7 +11,7 @@ class Obstacle extends Phaser.GameObjects.Sprite {
 
     update() {
         //modify the speed of obstacle by the current speed modifier determined in Play.js
-        this.x -= (2 * speedModifier);
+        this.x -= (5 * speedModifier);
     }
 
     // spawn the obstacle and set active
