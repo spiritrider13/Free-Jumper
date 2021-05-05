@@ -12,7 +12,7 @@ class Play extends Phaser.Scene {
         this.load.image('obstacle2', './assets/obstacle3.png');
         this.load.image('horse', './assets/horse.png');
 
-        this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
+        this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 128, frameHeight: 142, startFrame: 0, endFrame: 15});
         this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 128, frameHeight: 78, startFrame: 0, endFrame: 8});
 
         this.load.audio('backgroundMusic', './assets/tutorial_4.mp3');
@@ -97,15 +97,15 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'run',
             frames: this.anims.generateFrameNumbers('horseRun', { start: 0, end: 8, first: 0}),
-            framerate: .5,
+            framerate: .25,
             repeat: -1
         });
 
         // jump animation config
         this.anims.create({
             key: 'jump',
-            frames: this.anims.generateFrameNumbers('horseJump', { start: 0, end: 8, first: 0}),
-            framerate: 5
+            frames: this.anims.generateFrameNumbers('horseJump', { start: 1, end: 15, first: 0}),
+            framerate: 3
         });
 
         this.p1HorseAnims = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0);
@@ -258,7 +258,7 @@ class Play extends Phaser.Scene {
         }
     }
 
-    checkCollision(obstacle, horse) {  // collision function from rocket patrol
+    checkCollision(obstacle, horse) {  // collision function
         // simple AABB checking
         if (obstacle.x < horse.x + horse.width &&
             obstacle.x + obstacle.width > horse.x &&
