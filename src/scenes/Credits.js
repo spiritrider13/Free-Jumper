@@ -1,4 +1,4 @@
-// Controls menu
+// Credits menu scene
 
 class Credits extends Phaser.Scene {
     constructor() {
@@ -11,15 +11,26 @@ class Credits extends Phaser.Scene {
     }
 
     create() {
-        /*this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.5, loop: true });
-        this.backgroundMusic.play();*/
+        // menu text configuration
+        let menuConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#f3f8e2', 
+            color: '#000000',   
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }   
+
         // background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0);    
 
         // show menu text
-        //this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'CONTROLS', Menu.menuConfig).setOrigin(0.5);
-        this.add.text(560, 440, '<- GO BACK', Menu.menuConfig).setOrigin(0,0);  
-        //this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press SPACE to jump', Menu.menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2.75 - borderUISize - borderPadding, 'ENDLESS RIDER', this.menuConfig).setOrigin(0.5);
+        this.add.text(530, 440, '<- GO BACK', Menu.menuConfig).setOrigin(0,0);  
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);

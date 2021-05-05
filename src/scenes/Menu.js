@@ -1,4 +1,4 @@
-// Main menu
+// Main menu scene
 
 class Menu extends Phaser.Scene {
     constructor() {
@@ -15,8 +15,8 @@ class Menu extends Phaser.Scene {
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#f3f8e2', // orange
-            color: '#000000',   // orange text color
+            backgroundColor: '#f3f8e2', 
+            color: '#000000',   
             align: 'right',
             padding: {
                 top: 5,
@@ -33,7 +33,6 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2.3, 'Press RIGHT for controls', menuConfig).setOrigin(0.5);  
         this.add.text(game.config.width/2, game.config.height/2.3 + borderUISize + borderPadding, 'Press LEFT for credits', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/1.75 + borderUISize + borderPadding, 'Press SPACE to play', menuConfig).setOrigin(0.5);
-
         
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -41,6 +40,7 @@ class Menu extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
+    // key input actions
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start('creditsScene');

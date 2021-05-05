@@ -12,7 +12,6 @@ class Play extends Phaser.Scene {
         this.load.image('obstacle2', './assets/obstacle3.png');
         this.load.image('horse', './assets/horse.png');
 
-        // load spritesheet
         this.load.spritesheet('horseJump', './assets/jumpAnimation.png', {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 8});
         this.load.spritesheet('horseRun', './assets/runAnimation.png', {frameWidth: 128, frameHeight: 78, startFrame: 0, endFrame: 8});
 
@@ -31,6 +30,7 @@ class Play extends Phaser.Scene {
         this.sfxJump = this.sound.add('horseJump',{ volume: 1.5 });
         this.sfxGallop = this.sound.add('horseGallop',{ volume: 0.8 });
         this.sfxWhine = this.sound.add('horseWhine',{ volume: 1 });
+
         // background
         this.playbackground = this.add.tileSprite(0, 0, 640, 480, 'playbackground').setOrigin(0, 0);
 
@@ -49,8 +49,8 @@ class Play extends Phaser.Scene {
         //current obstacle on screen
         this.currentObstacle = null;
         
-        // white borders
-        this.add.rectangle(0, 0, game.config.width, borderUISize/*height*/, '0xFFFFFF').setOrigin(0, 0);    // top
+        // white borders - (x, y, width, height, texture)
+        this.add.rectangle(0, 0, game.config.width, borderUISize, '0xFFFFFF').setOrigin(0, 0);    // top
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);    // bottom
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);   // left
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);    // right
@@ -72,7 +72,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        //define space key
+        //define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
 
@@ -110,7 +110,6 @@ class Play extends Phaser.Scene {
 
         this.p1HorseAnims = this.add.sprite(this.p1Horse.x, this.p1Horse.y, 'horseRun').setOrigin(0);
         this.p1HorseAnims.visible = false;
-
     }
 
     update(time, delta) {
@@ -154,7 +153,6 @@ class Play extends Phaser.Scene {
             this.playbackground.tilePositionX += (2 * speedModifier) - .25;
         }
         
-        
         //update all objects
         this.p1Horse.update(time, delta);
         //console.log(this.p1Horse.immune);
@@ -167,9 +165,6 @@ class Play extends Phaser.Scene {
                 this.beginRandom();
             }
         }
-
-
-
 
         //check collisions
         if(this.currentObstacle != null && this.checkCollision(this.p1Horse, this.currentObstacle)) {
@@ -185,19 +180,12 @@ class Play extends Phaser.Scene {
             }
         }
         
-        
-        
-        
         //updating the distance
         if(!this.gameOver && this.gameStart){ //if game hasnt ended and has been started
             this.distance += delta * speedModifier;
             this.distanceDisplay.text = 'Distance Traveled: ' + Math.floor(this.distance/100);
         }
 
-        
-        
-        
-        
         //if game over, stop everything
         if(this.gameOver && this.gameStart){
             this.gameStart = false;
@@ -211,16 +199,13 @@ class Play extends Phaser.Scene {
                     this.highestScore = this.currentHigh;
                 } 
             }
-            //this.menuReturn = this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for menu', hudConfig).setOrigin(0.5);  
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        // Return to menu if game over
+        if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.gameOver) {
             this.scene.start('menuScene');
         }
 
-        
-        
-        
         //speed incrementation
         //Every 100 meters, the horse's speedModifier increases by 0.2
         //the "toFixed(1)" method rounds to nearest tenth.
@@ -247,12 +232,6 @@ class Play extends Phaser.Scene {
         else if(temp > 1000 && speedModifier.toFixed(1) == 2.8)
             speedModifier += 0.2;
     }
-
-
-
-
-
-
 
     //used for when the obstacle reaches left hand side - set inactive
     beginRandom() {

@@ -3,7 +3,7 @@ class Obstacle extends Phaser.GameObjects.Sprite {
     constructor(type, scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
 
-        scene.add.existing(this);   // add to exisiting scene
+        scene.add.existing(this);   
 
         this.type = type;
 

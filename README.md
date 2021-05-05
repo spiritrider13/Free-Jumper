@@ -1,16 +1,3 @@
-# Git Commands
-
-Do these before working on any code/files:
-- git status - compares your repo with master
-- git pull - updates your repo with any changes (if necessary)
-
-To add your changes to the master repo:
-- git add * - stages all changed files for commit
-- git commit - readies the files for pushing
-- git push - pushes your files to the master repository and makes it the most updated version
-
-**********
-
 # Project Info
 
 Names:
@@ -25,11 +12,3 @@ Date Completed:
 - 4/30/21
 
 Creative Tilt:
-
-*************
-
-# Current known bugs:
-
-- When playing after going to controls, the controls background stays on screen
-- distance traveled stops after jump
-- a horse spawns on top of the current one after jump
