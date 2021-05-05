@@ -23,6 +23,9 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.highestScore = 0;
+        this.currentHigh = 0;
+        
         this.backgroundMusic = this.sound.add('backgroundMusic',{ volume: 0.3, loop: true });
         this.backgroundMusic.play();
         this.sfxJump = this.sound.add('horseJump',{ volume: 1.5 });
@@ -58,7 +61,7 @@ class Play extends Phaser.Scene {
         //hud text config
         let hudConfig = {
             fontFamily: 'Arial',
-            fontSize: '28px',
+            fontSize: '20px',
             backgroundColor: '#00000000',
             color: '#000000',
             align: 'right',
@@ -74,6 +77,7 @@ class Play extends Phaser.Scene {
 
         //add elapsed time and distance to scene
         this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0', hudConfig);
+        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'RECORD: 0', hudConfig);
 
         //temp spacebar text
         this.tempText = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'PRESS SPACEBAR TO START', hudConfig).setOrigin(0.5);
@@ -193,6 +197,14 @@ class Play extends Phaser.Scene {
         if(this.gameOver && this.gameStart){
             this.gameStart = false;
             this.tempText.text = "PRESS SPACE TO RESTART";
+
+            if(Math.floor(this.distance/100) > this.highestScore){
+                this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100);
+                this.currentHigh = Math.floor(this.distance/100); 
+                if(this.currentHigh > this.highestScore){
+                    this.highestScore = this.currentHigh;
+                } 
+            }
             //this.menuReturn = this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for menu', hudConfig).setOrigin(0.5);  
         }
 
