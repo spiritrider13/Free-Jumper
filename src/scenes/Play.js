@@ -74,6 +74,7 @@ class Play extends Phaser.Scene {
 
         //define space key
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
 
         //add elapsed time and distance to scene
         this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0', hudConfig);
@@ -81,6 +82,7 @@ class Play extends Phaser.Scene {
 
         //temp spacebar text
         this.tempText = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'PRESS SPACEBAR TO START', hudConfig).setOrigin(0.5);
+        this.returnText = this.add.text(game.config.width/2, game.config.height/1.5 - borderUISize - borderPadding, '', hudConfig).setOrigin(0.5);
 
         //actual distance variable used to access distance
         this.distance = 0;
@@ -124,6 +126,7 @@ class Play extends Phaser.Scene {
                 speedModifier = 1;
                 this.sfxGallop.play();
                 this.tempText.text = "";
+                this.returnText.text = "";
                 if(this.currentObstacle != null)
                     this.currentObstacle.end();
                 this.beginRandom();
@@ -197,6 +200,7 @@ class Play extends Phaser.Scene {
         if(this.gameOver && this.gameStart){
             this.gameStart = false;
             this.tempText.text = "PRESS SPACE TO RESTART";
+            this.returnText.text = "PRESS LEFT TO RETURN TO MAIN";
 
             if(Math.floor(this.distance/100) > this.highestScore){
                 this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100);
@@ -204,6 +208,10 @@ class Play extends Phaser.Scene {
                 if(this.currentHigh > this.highestScore){
                     this.highestScore = this.currentHigh;
                 } 
+            }
+
+            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+                this.scene.start('menuScene');
             }
             //this.menuReturn = this.add.text(game.config.width/2, game.config.height/2, 'Press RIGHT for menu', hudConfig).setOrigin(0.5);  
         }
