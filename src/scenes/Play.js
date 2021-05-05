@@ -224,6 +224,7 @@ class Play extends Phaser.Scene {
 
         // Return to menu if game over
         if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.gameOver) {
+            this.backgroundMusic.stop();
             this.scene.start('menuScene');
         }
 
