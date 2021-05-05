@@ -14,7 +14,7 @@ class Horse extends Phaser.GameObjects.Sprite {
         if(this.immune){
             //while its immune, itll have a timer that when it reaches a target, will disable immune
             this.immuneTimer += delta;
-            if(this.immuneTimer >= 1200 / speedModifier){
+            if(this.immuneTimer >= 1300 / speedModifier){
                 this.immune = false;
                 this.immuneTimer = -1;
                 console.log("No longer immune");
