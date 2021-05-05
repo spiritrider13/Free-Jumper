@@ -77,7 +77,7 @@ class Play extends Phaser.Scene {
 
         //add elapsed time and distance to scene
         this.distanceDisplay = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2 + 3, 'Distance Traveled: 0 m', hudConfig);
-        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'RECORD: ' + distanceRecord + " m", hudConfig);
+        this.highDisDisplay = this.add.text(borderUISize + borderPadding + 320, borderUISize + borderPadding * 2 + 3, 'Session Record: ' + distanceRecord + " m", hudConfig);
 
         //temp spacebar text
         this.tempText = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'PRESS SPACEBAR TO START', hudConfig).setOrigin(0.5);
@@ -213,7 +213,7 @@ class Play extends Phaser.Scene {
             this.returnText.text = "Press LEFT to return to main menu";
 
             if(Math.floor(this.distance/100) > distanceRecord){
-                this.highDisDisplay.text = 'RECORD: ' + Math.floor(this.distance/100) + " m";
+                this.highDisDisplay.text = 'Session Record: ' + Math.floor(this.distance/100) + " m";
                 this.currentHigh = Math.floor(this.distance/100); 
                 if(this.currentHigh > distanceRecord){
                     distanceRecord = this.currentHigh;
