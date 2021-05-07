@@ -6,7 +6,7 @@ Names:
 - Jason Lee
 
 Game Title:
-- Endless Rider
+- Free Jumper
 
 Date Completed:
 - 5/5/21
